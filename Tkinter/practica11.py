@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 
 
 
@@ -7,8 +8,33 @@ ventana.title("Practica 11")
 ventana.geometry("600x400")
 
 
+    
+#funciones de los botones para mostrar mensajes
 
-
+def mostrarMensaje():
+    messagebox.showinfo("Aviso","Muy bien, has presionado el boton que teinforma")
+    messagebox.showwarning("Error:","Todo fallo con exito ")
+    
+    respuesta = messagebox.askquestion("Pregunta","¿Desea continuar?")
+    if respuesta == "yes":
+        print("Exito")
+    else:
+        print("Fallo")
+        
+    respuesta = messagebox.askokcancel("Pregunta","¿Desea continuar?")
+    
+    if respuesta == True:
+        print("Si")
+    else:
+        print("No")
+        
+   
+def agregarBoton():
+    boton4.config(text='+',bg='green',fg='red' )
+    botonNuevo=Button(seccion3,text="Nuevo", bg="green",fg="#000",width=10,height=1)
+    botonNuevo.grid(row=4,column=0) 
+    
+ 
 #creacion de un menu
 barraMenu = Menu(ventana)
 ventana.config(menu=barraMenu)
@@ -33,16 +59,16 @@ seccion4.pack(side=BOTTOM,anchor=SW,fill=X)
 
 #3. Botones
 
-boton1 = Button(seccion1,text="Presioname", bg="#000",fg="#000",width=10,height=1,)
+boton1 = Button(seccion1,text="Presioname", bg="#000",fg="#000",width=10,height=1,command=mostrarMensaje)
 boton1.grid(row=0,column=0)
 
 boton2 = Button(seccion1,text="a la una", bg="blue",fg="#000",width=10,height=1)
-boton2.grid(row=1,column=0)
+boton2.grid(row=0,column=2)
 
-boton3 = Button(seccion1,text="y a las tres", bg="yellow",fg="#000",width=10,height=1 )
+boton3 = Button(seccion2,text="y a las tres", bg="yellow",fg="#000",width=10,height=1)
 boton3.grid(row=2,column=0)
 
-boton4 = Button(seccion1,text="a las dos", bg="green",fg="#000",width=10,height=1)
+boton4 = Button(seccion3,text="a las dos", bg="green",fg="#000",width=10,height=1,command=agregarBoton)
 boton4.grid(row=3,column=0)
 
 
