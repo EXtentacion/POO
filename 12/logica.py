@@ -21,9 +21,11 @@ class LoginUI:
 
         self.entry2 = tk.Entry(self.parent, show="*")
         self.entry2.grid(row=1, column=1, padx=10, pady=10)
-
+         
+         
+         #boton este centrado
         self.boton1 = tk.Button(self.parent, text="Ingresar", command=self.ingresar)
-        self.boton1.grid(row=2, column=0, padx=10, pady=10)
+        self.boton1.grid(row=3, column=1, columnspan=2, padx=50, pady=50, sticky=tk.W+tk.E)
 
     def ingresar(self):
         correo = self.entry1.get()
