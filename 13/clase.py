@@ -7,7 +7,7 @@ class GeneradorPassword:
     def __init__(self, parent):
         self.parent = parent
         
-        # Variables
+        # Variables 
         self.mayus = IntVar()
         self.esp = IntVar()
         self.contrasena = StringVar()
