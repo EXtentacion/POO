@@ -8,13 +8,9 @@
 
 from tkinter import *
 from tkinter import messagebox
-from tkinter import ttk
 import random
  
-    
-from tkinter import *
-from tkinter import messagebox
-import random
+
 
 
 class Cuenta:
