@@ -120,6 +120,8 @@ class Formulario(Tk):
         self.title("Caja Popular")
         self.geometry("300x300")
         self.caja = Caja()
+        self.config(bg="grey")
+        
         
         self.numero = StringVar()
         self.monto = StringVar()
