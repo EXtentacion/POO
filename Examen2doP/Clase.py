@@ -27,7 +27,7 @@ class Matricula:
         yo.crear_widgets()
         
     def crear_widgets(yo):
-        #Componentes de nuestra interfaz
+        #Componentes de mi interfaz
         yo.label_n = Label(yo.hermano, text="Nombre:", bg="#F0F0F0")
         yo.label_n.grid(row=0, column=0, padx=5, pady=5)
         
@@ -62,7 +62,7 @@ class Matricula:
         yo.b.grid(row=5, column=0, columnspan=2, padx=5, pady=5)
 
     def generar_matricula(yo):
-
+        #Obtenermos los datos de los textvariables y asignamos a variables
         nombre = yo.nombre.get()
         a_paterno = yo.a_paterno.get()
         a_materno = yo.a_materno.get()
