@@ -74,7 +74,7 @@ class Matricula:
             messagebox.showerror("Error", "Todos los campos son requeridos")
         else:
             #Logica detras del poema
-            matricula = nombre[0] + a_paterno[0:2] + a_materno[0:2] + str(a_nacimiento)[-2:] + str(2023)[-2:] + carrera[0:3] + str(random.randint(0, 1000))
+            matricula = nombre[0] + a_paterno[0:2] + a_materno[0:2] + str(a_nacimiento)[-2:] + str(2023)[-2:] + carrera[0:3] + str(random.randint(0, 99))
             messagebox.showinfo("Matricula", "Tu Matricula random es: {}".format(matricula.upper()))
             
 if __name__ == "__main__":
