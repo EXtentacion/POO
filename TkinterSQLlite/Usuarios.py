@@ -1,16 +1,18 @@
 from tkinter import *
 from tkinter import ttk
-import tkinter as tk
+from ControladorBD import *
+
+interfazC = controlador()
+
 
 Ventana = Tk()
 Ventana.title("Usuarios")
-Ventana.geometry("700x500")
-Ventana.resizable(0,0)
-
-# Crear Tabla
+Ventana.geometry("420x300")
+Ventana.config(bg="lightblue")
 
 panel = ttk.Notebook(Ventana)
-panel.pack(fill = "both", expand = "yes")
+panel.pack(fill="both", expand="yes")
+
 
 pestana1 = ttk.Frame(panel)
 pestana2 = ttk.Frame(panel)
@@ -19,51 +21,123 @@ pestana4 = ttk.Frame(panel)
 
 
 
-panel.add(pestana1, text = "Formulario usuarios")
-panel.add(pestana2, text = "Buscar Usuarios")
-panel.add(pestana3, text = "Consultar usuarios")
-panel.add(pestana4, text = "Actualizar usuarios")
-
-titulo = Label(pestana1, text = "Formulario de usuarios", font = ("Arial", 20)).place(x = 200, y = 20)
-varNombre = StringVar()
-nombre = Label(pestana1, text = "Nombre: ", font = ("Arial", 12)).place(x = 20, y = 100)
-txtNombre = Entry(pestana1, textvariable = varNombre, font = ("Arial", 12)).place(x = 100, y = 100)
-varContrasena = StringVar()
-contrasena = Label(pestana1, text = "Contraseña: ", font = ("Arial", 12)).place(x = 20, y = 150)
-txtContrasena = Entry(pestana1, textvariable = varContrasena, font = ("Arial", 12)).place(x = 100, y = 150)
-varCorreo = StringVar()
-correo = Label(pestana1, text = "Correo: ", font = ("Arial", 12)).place(x = 20, y = 200)
-txtCorreo = Entry(pestana1, textvariable = varCorreo, font = ("Arial", 12)).place(x = 100, y = 200)
-boton = Button(pestana1, text = "Guardar", font = ("Arial", 12)).place(x = 20, y = 250)
-
-titulo2 = Label(pestana2, text = "Buscar usuarios", font = ("Arial", 20)).place(x = 200, y = 20)
-varBuscar = StringVar()
-buscar = Label(pestana2, text = "Buscar: ", font = ("Arial", 12)).place(x = 20, y = 100)
-txtBuscar = Entry(pestana2, textvariable = varBuscar, font = ("Arial", 12)).place(x = 100, y = 100)
-boton2 = Button(pestana2, text = "Buscar", font = ("Arial", 12)).place(x = 20, y = 150)
+panel.add(pestana1, text="Crear")
+panel.add(pestana2, text="Leer")
+panel.add(pestana3, text="Actualizar")
+panel.add(pestana4, text="Eliminar")
 
 
-titulo3 = Label(pestana3, text = "Consultar usuarios", font = ("Arial", 20)).place(x = 200, y = 20)
-cosultar = Label(pestana3, text = "Consultar: ", font = ("Arial", 12)).place(x = 20, y = 100)
-txtconsultar = Entry(pestana3, textvariable = varBuscar, font = ("Arial", 12)).place(x = 100, y = 100)
-boton3 = Button(pestana3, text = "Consultar", font = ("Arial", 12)).place(x = 20, y = 150)
+#Pestaña 1
+
+Label(pestana1, text="Nombre: ").grid(row=0, column=0, padx=10, pady=10)
+Label(pestana1, text="Apellido: ").grid(row=1, column=0, padx=10, pady=10)
+Label(pestana1, text="Correo: ").grid(row=2, column=0, padx=10, pady=10)
+Label(pestana1, text="Contraseña: ").grid(row=3, column=0, padx=10, pady=10)
+
+nombre = StringVar()
+apellido = StringVar()
+correo = StringVar()
+contraseña = StringVar()
+
+Entry(pestana1, textvariable=nombre).grid(row=0, column=1, padx=10, pady=10)
+Entry(pestana1, textvariable=apellido).grid(row=1, column=1, padx=10, pady=10)
+Entry(pestana1, textvariable=correo).grid(row=2, column=1, padx=10, pady=10)
+Entry(pestana1, textvariable=contraseña, show="*").grid(row=3, column=1, padx=10, pady=10)
+
+def crear():
+    interfazC.crearUsuarios(nombre.get(), apellido.get(), correo.get(), contraseña.get())
+    nombre.set("")
+    apellido.set("")
+    correo.set("")
+    contraseña.set("")
+    
+Button(pestana1, text="Crear", command=crear).grid(row=4, column=1, padx=10, pady=10)
 
 
-titulo4 = Label(pestana4, text = "Actualizar usuarios", font = ("Arial", 20)).place(x = 200, y = 20)
-varActualizar = StringVar()
-actualizar = Label(pestana4, text = "Actualizar: ", font = ("Arial", 12)).place(x = 20, y = 100)
-txtActualizar = Entry(pestana4, textvariable = varActualizar, font = ("Arial", 12)).place(x = 100, y = 100)
-boton4 = Button(pestana4, text = "Actualizar", font = ("Arial", 12)).place(x = 20, y = 150)
+#Pestaña 2
+
+#pedir id y buscar por usuario 
+
+
+#Leer todos los datos de la tabla
+
+def leer():
+    usuarios = interfazC.leerUsuarios()
+    for usuario in usuarios:
+        tree.insert("", 0, text=usuario[0], values=(usuario[1], usuario[2], usuario[3], usuario[4]))
+    
+tree = ttk.Treeview(pestana2, height=10, columns=("#0", "#1", "#2", "#3"))
+
+tree.heading("#0", text="ID")
+tree.heading("#1", text="NOMBRE")
+tree.heading("#2", text="Apellido")
+tree.heading("#3", text="Correo")
+
+
+tree.grid(row=0, column=0, padx=10, pady=10)
+
+#FUNCION PARA QUE NO SE REPITAN LOS DATOS AL LEER AUTOMATICAMENTE
+
+
+def limpiar():
+    registros = tree.get_children()
+    for registro in registros:
+        tree.delete(registro)
+        
+Button(pestana2, text="Leer", command=leer).grid(row=1, column=0, padx=10, pady=10)
+Button(pestana2, text="Limpiar", command=limpiar).grid(row=2, column=0, padx=10, pady=10)
 
 
 
 
+
+#Pestaña 3
+
+Label(pestana3, text="ID: ").grid(row=0, column=0, padx=10, pady=10)
+Label(pestana3, text="Nombre: ").grid(row=1, column=0, padx=10, pady=10)
+Label(pestana3, text="Apellido: ").grid(row=2, column=0, padx=10, pady=10)
+Label(pestana3, text="Correo: ").grid(row=3, column=0, padx=10, pady=10)
+Label(pestana3, text="Contraseña: ").grid(row=4, column=0, padx=10, pady=10)
+
+id = StringVar()
+nombre = StringVar()
+apellido = StringVar()
+correo = StringVar()
+
+Entry(pestana3, textvariable=id).grid(row=0, column=1, padx=10, pady=10)
+
+Entry(pestana3, textvariable=nombre).grid(row=1, column=1, padx=10, pady=10)
+
+Entry(pestana3, textvariable=apellido).grid(row=2, column=1, padx=10, pady=10)
+
+Entry(pestana3, textvariable=correo).grid(row=3, column=1, padx=10, pady=10)
+
+Entry(pestana3, textvariable=contraseña, show="*").grid(row=4, column=1, padx=10, pady=10)
+
+def actualizar():
+    interfazC.actualizarUsuarios(id.get(), nombre.get(), apellido.get(), correo.get(), contraseña.get())
+    id.set("")
+    nombre.set("")
+    apellido.set("")
+    correo.set("")
+    contraseña.set("")
+    
+Button(pestana3, text="Actualizar", command=actualizar).grid(row=5, column=1, padx=10, pady=10)
+
+#Pestaña 4
+
+Label(pestana4, text="ID: ").grid(row=0, column=0, padx=10, pady=10)
+
+id = StringVar()
+
+Entry(pestana4, textvariable=id).grid(row=0, column=1, padx=10, pady=10)
+
+def eliminar():
+    interfazC.eliminarUsuarios(id.get())
+    id.set("")
+    
+Button(pestana4, text="Eliminar", command=eliminar).grid(row=1, column=1, padx=10, pady=10)
 
 Ventana.mainloop()
-
-
-
-
-
 
 
