@@ -18,10 +18,12 @@ pestana1 = ttk.Frame(panel)
 pestana2 = ttk.Frame(panel)
 pestana3 = ttk.Frame(panel)
 pestana4 = ttk.Frame(panel)
+pestana5 = ttk.Frame(panel)
 
 
 
 panel.add(pestana1, text="Crear")
+panel.add(pestana5, text="Buscar")
 panel.add(pestana2, text="Leer")
 panel.add(pestana3, text="Actualizar")
 panel.add(pestana4, text="Eliminar")
@@ -59,12 +61,63 @@ Button(pestana1, text="Crear", command=crear).grid(row=4, column=0, padx=10, pad
 
 
 
+#Pestana 5
+
+#Buscar un usuario en especifico y mostrar sus datos nombre,apellido,correo,contraseña
+
+
+
+id_var =StringVar()
+nombre_var =StringVar()
+apellido_var =StringVar()
+correo_var =StringVar()
+contraseña_var =StringVar()
+
+Entry(pestana5, textvariable=id_var).grid(row=1, column=1, padx=10, pady=10)
+Entry(pestana5, textvariable=nombre_var).grid(row=2, column=1, padx=10, pady=10)
+Entry(pestana5, textvariable=apellido_var).grid(row=3, column=1, padx=10, pady=10)
+Entry(pestana5, textvariable=correo_var).grid(row=4, column=1, padx=10, pady=10)
+Entry(pestana5, textvariable=contraseña_var).grid(row=5, column=1, padx=10, pady=10)
+
+
+def buscar():
+    # Retrieve the information from the database
+    usuario = interfazC.buscar(id.get())
+
+    # Check if the user was found
+    if usuario:
+        # Set the values of the StringVarsx
+        id_var.set(usuario[0][0])
+        nombre_var.set(usuario[0][1])
+        apellido_var.set(usuario[0][2])
+        correo_var.set(usuario[0][3])
+        contraseña_var.set(usuario[0][4])
+    else:
+        # Clear the values of the Entry widgets
+        id_var.set("")
+        nombre_var.set("")
+        apellido_var.set("")
+        correo_var.set("")
+        contraseña_var.set("")
+        
+Label(pestana5, text="Id: ").grid(row=1, column=0, padx=10, pady=10)
+Label(pestana5, text="Nombre: ").grid(row=2, column=0, padx=10, pady=10)
+Label(pestana5, text="Apellido: ").grid(row=3, column=0, padx=10, pady=10)
+Label(pestana5, text="Correo: ").grid(row=4, column=0, padx=10, pady=10)
+Label(pestana5, text="Contraseña: ").grid(row=5, column=0, padx=10, pady=10)
+
+# Set the initial value of the ID Entry widget to 0
+id_var.set(0)
+
+Button(pestana5, text="Buscar", command=buscar).grid(row=0, column=2, padx=10, pady=10)
+
+
+    
+
+
+
+
 #Pestaña 2
-
-#pedir id y buscar por usuario 
-
-
-#Leer todos los datos de la tabla
 
 def leer():
     usuarios = interfazC.leerUsuarios()

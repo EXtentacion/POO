@@ -25,13 +25,21 @@ class controlador:
             
    #insertar usuarios
    
+
+   
     def insertarUsuarios(self, nombre, apellido, correo, contraseña):
         self.cursor.execute("INSERT INTO loll VALUES(NULL, '" + nombre + "', '" + apellido + "', '" + correo + "', '" + contraseña + "')")
         self.conexion.commit()
         messagebox.showinfo("BBDD", "Registro insertado con éxito")
-   
-    
         
+    def buscar(self, id):
+        self.cursor.execute("SELECT * FROM loll WHERE id=?", (id,))
+        usuario = self.cursor.fetchall()
+        return usuario
+    
+
+   
+     
         
     #quiero poder leer todos los parametros de la tabla
     def leerUsuarios(self):
