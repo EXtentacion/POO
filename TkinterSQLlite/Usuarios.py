@@ -39,19 +39,24 @@ apellido = StringVar()
 correo = StringVar()
 contraseña = StringVar()
 
+
 Entry(pestana1, textvariable=nombre).grid(row=0, column=1, padx=10, pady=10)
 Entry(pestana1, textvariable=apellido).grid(row=1, column=1, padx=10, pady=10)
 Entry(pestana1, textvariable=correo).grid(row=2, column=1, padx=10, pady=10)
 Entry(pestana1, textvariable=contraseña, show="*").grid(row=3, column=1, padx=10, pady=10)
 
 def crear():
-    interfazC.crearUsuarios(nombre.get(), apellido.get(), correo.get(), contraseña.get())
+    
+    interfazC.insertarUsuarios(nombre.get(), apellido.get(), correo.get(), contraseña.get())
+    
     nombre.set("")
     apellido.set("")
     correo.set("")
     contraseña.set("")
     
-Button(pestana1, text="Crear", command=crear).grid(row=4, column=1, padx=10, pady=10)
+Button(pestana1, text="Crear", command=crear).grid(row=4, column=0, padx=10, pady=10)
+
+
 
 
 #Pestaña 2
@@ -68,10 +73,11 @@ def leer():
     
 tree = ttk.Treeview(pestana2, height=10, columns=("#0", "#1", "#2", "#3"))
 
-tree.heading("#0", text="ID")
-tree.heading("#1", text="NOMBRE")
-tree.heading("#2", text="Apellido")
-tree.heading("#3", text="Correo")
+tree.heading("#0", text="id")
+tree.heading("#1", text="nombre")
+tree.heading("#2", text="apellido")
+tree.heading("#3", text="correo")
+tree.heading("#4", text="contraseña")
 
 
 tree.grid(row=0, column=0, padx=10, pady=10)
@@ -100,9 +106,7 @@ Label(pestana3, text="Correo: ").grid(row=3, column=0, padx=10, pady=10)
 Label(pestana3, text="Contraseña: ").grid(row=4, column=0, padx=10, pady=10)
 
 id = StringVar()
-nombre = StringVar()
-apellido = StringVar()
-correo = StringVar()
+
 
 Entry(pestana3, textvariable=id).grid(row=0, column=1, padx=10, pady=10)
 
