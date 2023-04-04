@@ -2,6 +2,8 @@ from tkinter import *
 from tkinter import ttk
 from ControladorBD import *
 
+
+
 interfazC = controlador()
 
 
@@ -122,8 +124,9 @@ Button(pestana5, text="Buscar", command=buscar).grid(row=0, column=2, padx=10, p
 def leer():
     usuarios = interfazC.leerUsuarios()
     for usuario in usuarios:
-        tree.insert("", 0, text=usuario[0], values=(usuario[1], usuario[2], usuario[3], usuario[4]))
-    
+        id_, nombre, apellido, correo, password = usuario
+        tree.insert("", 0, text=id_, values=(nombre, apellido, correo, password))
+
 tree = ttk.Treeview(pestana2, height=10, columns=("#0", "#1", "#2", "#3"))
 
 tree.heading("#0", text="id")
@@ -150,36 +153,16 @@ Button(pestana2, text="Limpiar", command=limpiar).grid(row=2, column=0, padx=10,
 
 
 
-#Pestaña 3
+# Pestaña 3
 
-Label(pestana3, text="ID: ").grid(row=0, column=0, padx=10, pady=10)
-Label(pestana3, text="Nombre: ").grid(row=1, column=0, padx=10, pady=10)
-Label(pestana3, text="Apellido: ").grid(row=2, column=0, padx=10, pady=10)
-Label(pestana3, text="Correo: ").grid(row=3, column=0, padx=10, pady=10)
-Label(pestana3, text="Contraseña: ").grid(row=4, column=0, padx=10, pady=10)
-
-id = StringVar()
-
-
-Entry(pestana3, textvariable=id).grid(row=0, column=1, padx=10, pady=10)
-
-Entry(pestana3, textvariable=nombre).grid(row=1, column=1, padx=10, pady=10)
-
-Entry(pestana3, textvariable=apellido).grid(row=2, column=1, padx=10, pady=10)
-
-Entry(pestana3, textvariable=correo).grid(row=3, column=1, padx=10, pady=10)
-
-Entry(pestana3, textvariable=contraseña, show="*").grid(row=4, column=1, padx=10, pady=10)
 
 def actualizar():
-    interfazC.actualizarUsuarios(id.get(), nombre.get(), apellido.get(), correo.get(), contraseña.get())
-    id.set("")
-    nombre.set("")
-    apellido.set("")
-    correo.set("")
-    contraseña.set("")
-    
+    interfazC.actualizarPorId()
+
 Button(pestana3, text="Actualizar", command=actualizar).grid(row=5, column=1, padx=10, pady=10)
+
+
+
 
 #Pestaña 4
 
@@ -190,8 +173,11 @@ id = StringVar()
 Entry(pestana4, textvariable=id).grid(row=0, column=1, padx=10, pady=10)
 
 def eliminar():
-    interfazC.eliminarUsuarios(id.get())
-    id.set("")
+    # preguntar si está seguro de eliminar
+    respuesta = messagebox.askyesno("Confirmación", "¿Está seguro de que desea eliminar este usuario?")
+    if respuesta:
+        interfazC.eliminarUsuarios(id.get())
+        id.set("")
     
 Button(pestana4, text="Eliminar", command=eliminar).grid(row=1, column=1, padx=10, pady=10)
 
